@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(['verify' => true]);
 
 //Route::middleware(['auth'])->group(function () {
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->only(['index', 'update', 'destroy']);
 
     Route::resource('companies', CompanyController::class);
+    Route::resource('seasons', SeasonController::class);
 //});

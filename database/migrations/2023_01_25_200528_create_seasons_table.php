@@ -15,7 +15,13 @@ class CreateSeasonsTable extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 
@@ -26,6 +32,10 @@ class CreateSeasonsTable extends Migration
      */
     public function down()
     {
+        Schema::table('seasons', function (Blueprint $table) {
+            $table->dropForeign(['company_id']);
+        });
+
         Schema::dropIfExists('seasons');
     }
 }
