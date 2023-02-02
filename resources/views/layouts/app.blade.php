@@ -42,6 +42,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('seasons.index') }}">{{ __('Seasons') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('flights.index') }}">{{ __('Flights') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
