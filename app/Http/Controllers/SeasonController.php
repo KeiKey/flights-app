@@ -18,7 +18,7 @@ class SeasonController extends Controller
      */
     public function index(): View
     {
-        return view('seasons.index', ['seasons' => Season::all()]);
+        return view('seasons.index', ['seasons' => Season::query()->with('companies')->get()]);
     }
 
     /**
@@ -42,12 +42,13 @@ class SeasonController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            Season::query()
-                ->create([
-                    'company_id' => $request->input('company'),
-                    'start_date' => $request->input('start_date'),
-                    'end_date'   => $request->input('end_date'),
-                ]);
+            /** @var Season $season */
+            $season = Season::query()->create([
+                'start_date' => $request->input('start_date'),
+                'end_date'   => $request->input('end_date'),
+            ]);
+
+            $season->companies()->attach($request->input('companies'));
 
             return redirect()->route('seasons.index');
         } catch (Exception $exception) {
@@ -80,8 +81,11 @@ class SeasonController extends Controller
     {
         try {
             $season->update([
-                'name' => $request->input('name')
+                'start_date' => $request->input('start_date'),
+                'end_date'   => $request->input('end_date'),
             ]);
+
+            $season->companies()->sync($request->input('companies'));
 
             return redirect()->route('seasons.index');
         } catch (Exception $exception) {

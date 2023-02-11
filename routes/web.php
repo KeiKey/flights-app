@@ -17,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes(['verify' => true]);
 Route::get('/', function () {return view('welcome');});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes(['verify' => true]);
 
 //Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->only(['index', 'update', 'destroy']);
+    Route::put('users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::resource('companies', CompanyController::class);
     Route::resource('seasons', SeasonController::class);
     Route::resource('flights', FlightController::class);

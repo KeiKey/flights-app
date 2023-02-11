@@ -8,12 +8,12 @@
         <label for="company" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
 
         <div class="col-md-6">
-            <select class="form-select form-control-rounded" id="company" name="company" required>
-                <option value="">Select company</option>
+            <select class="form-select form-control-rounded js-multiple" id="company" name="companies[]" required multiple>
+                <option value="" disabled>Select company</option>
 
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}"
-                        {{ old('company') ? ($company->id == old('company') ? 'selected' : '' ) : (isset($season) ? ($company->id == $season?->company_id ? 'selected' : '' ) : '') }}
+                        {{ in_array($company->id, old('companies', isset($season) ? $season->companies->pluck('id')->toArray() : [] )) ? ' selected' : '' }}
                     >{{ $company->name }}</option>
                 @endforeach
             </select>
