@@ -23,7 +23,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->only(['index', 'update', 'destroy']);
-    Route::put('users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::resource('companies', CompanyController::class);
     Route::resource('seasons', SeasonController::class);
     Route::resource('flights', FlightController::class);

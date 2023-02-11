@@ -30,7 +30,7 @@
         <label for="start_date" class="col-md-4 col-form-label text-md-right">{{ __('Start date') }}</label>
 
         <div class="col-md-6">
-            <input type="date" id="start_date" name="start_date" value="{{ old('start_date', isset($season) ? $season->start_date?->format('Y-m-d') : '') }}" required>
+            <input class="form-control" type="date" id="start_date" name="start_date" value="{{ old('start_date', isset($season) ? $season->start_date?->format('Y-m-d') : '') }}" required>
 
             @error('start_date')
             <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
         <label for="end_date" class="col-md-4 col-form-label text-md-right">{{ __('End date') }}</label>
 
         <div class="col-md-6">
-            <input type="date" id="end_date" name="end_date" value="{{ old('end_date', isset($season) ? $season->end_date?->format('Y-m-d') : '') }}" required>
+            <input class="form-control" type="date" id="end_date" name="end_date" value="{{ old('end_date', isset($season) ? $season->end_date?->format('Y-m-d') : '') }}" required>
 
             @error('end_date')
             <span class="invalid-feedback" role="alert">

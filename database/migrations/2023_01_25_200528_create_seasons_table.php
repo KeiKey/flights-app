@@ -41,9 +41,11 @@ class CreateSeasonsTable extends Migration
      */
     public function down()
     {
-        Schema::table('seasons', function (Blueprint $table) {
+        Schema::table('company_season', function (Blueprint $table) {
             $table->dropForeign(['company_id']);
+            $table->dropForeign(['season_id']);
         });
+        Schema::dropIfExists('company_season');
 
         Schema::dropIfExists('seasons');
     }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FlightCategory;
 use App\Models\Company;
+use App\Models\Season;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -29,7 +32,8 @@ class FlightController extends Controller
     public function create(): View
     {
         return view('flights.create', [
-            'companies' => Company::all()
+            'flightCategories' => FlightCategory::toArray(),
+            'seasons'          => Season::query()->with('companies')->get()
         ]);
     }
 
@@ -42,12 +46,28 @@ class FlightController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            Flight::query()
-                ->create([
-                    'company_id' => $request->input('company'),
-                    'start_date' => $request->input('start_date'),
-                    'end_date'   => $request->input('end_date'),
-                ]);
+            /** @var Season $season */
+            $season = Season::query()->findOrFail($request->input('flightSeason'));
+            $daysToHaveFlights = array_filter($request->input('timetables'), fn($day) => !empty($day));
+            foreach (CarbonPeriod::create($season->start_date, $season->end_date) as $date) {
+                if (!array_key_exists($date->dayName, $daysToHaveFlights)){
+                    continue;
+                }
+
+                $season->companies->each(function (Company $company) use ($season, $date, $daysToHaveFlights, $request) {
+                    Flight::query()->create([
+                        'season_id'               => $season->id,
+                        'company_id'              => $company->id,
+                        'flight_category'         => $request->input('flightCategory'),
+                        'flight_date'             => $date,
+                        'flight_hour'             => date('Y-m-d H:i:s', strtotime($daysToHaveFlights[$date->dayName])),
+                        'destination'             => $request->input('destination'),
+                        'destination_description' => $request->input('destination_description'),
+                        'call_sign'               => $request->input('call_sign'),
+                        'comment'                 => $request->input('comment'),
+                    ]);
+                });
+            }
 
             return redirect()->route('flights.index');
         } catch (Exception $exception) {
