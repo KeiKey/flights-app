@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\FlightCategory;
 use App\Models\Company;
 use App\Models\Season;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class FlightController extends Controller
      */
     public function index(): View
     {
-        return view('flights.index', ['flights' => Flight::all()]);
+        return view('flights.index', ['flights' => Flight::query()->filter(request()->all())->paginate(15)]);
     }
 
     /**
@@ -54,19 +55,20 @@ class FlightController extends Controller
                     continue;
                 }
 
-                $season->companies->each(function (Company $company) use ($season, $date, $daysToHaveFlights, $request) {
-                    Flight::query()->create([
-                        'season_id'               => $season->id,
-                        'company_id'              => $company->id,
-                        'flight_category'         => $request->input('flightCategory'),
-                        'flight_date'             => $date,
-                        'flight_hour'             => date('Y-m-d H:i:s', strtotime($daysToHaveFlights[$date->dayName])),
-                        'destination'             => $request->input('destination'),
-                        'destination_description' => $request->input('destination_description'),
-                        'call_sign'               => $request->input('call_sign'),
-                        'comment'                 => $request->input('comment'),
-                    ]);
-                });
+                $season->companies
+                    ->each(function (Company $company) use ($season, $date, $daysToHaveFlights, $request) {
+                        Flight::query()->create([
+                            'season_id'               => $season->id,
+                            'company_id'              => $company->id,
+                            'flight_category'         => $request->input('flightCategory'),
+                            'flight_date'             => $date,
+                            'flight_hour'             => $daysToHaveFlights[$date->dayName],
+                            'destination'             => $request->input('destination'),
+                            'destination_description' => $request->input('destination_description'),
+                            'call_sign'               => $request->input('call_sign'),
+                            'comment'                 => $request->input('comment')
+                        ]);
+                    });
             }
 
             return redirect()->route('flights.index');
@@ -78,14 +80,15 @@ class FlightController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Flight $season
+     * @param Flight $flight
      * @return View
      */
-    public function edit(Flight $season): View
+    public function edit(Flight $flight): View
     {
         return view('flights.edit', [
-            'season'    => $season,
-            'companies' => Company::all(),
+            'flight'           => $flight,
+            'flightCategories' => FlightCategory::toArray(),
+            'seasons'          => Season::query()->with('companies')->get()
         ]);
     }
 
@@ -93,14 +96,19 @@ class FlightController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Flight $season
+     * @param Flight $flight
      * @return RedirectResponse
      */
-    public function update(Request $request, Flight $season): RedirectResponse
+    public function update(Request $request, Flight $flight): RedirectResponse
     {
         try {
-            $season->update([
-                'name' => $request->input('name')
+            $flight->update([
+                'flight_date'             => $request->input('flight_date'),
+                'flight_hour'             => $request->input('flight_hour'),
+                'destination'             => $request->input('destination'),
+                'destination_description' => $request->input('destination_description'),
+                'call_sign'               => $request->input('call_sign'),
+                'comment'                 => $request->input('comment')
             ]);
 
             return redirect()->route('flights.index');

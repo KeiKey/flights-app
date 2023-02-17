@@ -19,7 +19,7 @@ class CreateFlightsTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->string('flight_category');
             $table->date('flight_date');
-            $table->timestamp('flight_hour');
+            $table->time('flight_hour');
             $table->string('destination');
             $table->string('destination_description');
             $table->string('call_sign');
