@@ -26,7 +26,18 @@ class FlightController extends Controller
      */
     public function index(): View
     {
-        return view('flights.index', ['flights' => Flight::query()->filter(request()->all())->paginate(15)]);
+        return view('flights.index', ['flights' => Flight::query()->latest()->filter(request()->all())->paginate(20)]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Flight $flight
+     * @return View
+     */
+    public function show(Flight $flight): View
+    {
+        return view('flights.show', ['flight' => $flight->load(['season', 'company'])]);
     }
 
     /**

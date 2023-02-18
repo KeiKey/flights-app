@@ -13,7 +13,7 @@ class FlightService
      *
      * @throws Exception
      */
-    public function createFlight(array $data): Flight
+    public function createFlight(array $data)
     {
         return FlightFactory::factory($data['flightCategory'])->createFlight($data);
     }

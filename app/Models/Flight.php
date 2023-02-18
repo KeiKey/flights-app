@@ -7,7 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int id
+ * @property string season_id
+ * @property string company_id
+ * @property string flight_category
+ * @property Carbon flight_date
+ * @property string flight_hour
+ * @property string destination
+ * @property string destination_description
+ * @property string call_sign
+ * @property string comment
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ * @property Carbon deleted_at
+ */
 class Flight extends Model
 {
     use HasFactory, SoftDeletes;

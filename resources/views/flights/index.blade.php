@@ -58,6 +58,10 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        <div class="d-flex justify-content-end">
+                            {{ $flights->appends(request()->query())->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
