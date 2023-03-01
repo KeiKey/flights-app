@@ -4,7 +4,7 @@
 
         <div class="row mb-3">
             @if (in_array('company', $filters))
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="company" class="text-md-right">{{ __('Company') }}</label>
 
                     <select class="form-select form-control-rounded small" id="company" name="company">
@@ -18,7 +18,7 @@
             @endif
 
             @if (in_array('season', $filters))
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="season" class="text-md-right">{{ __('Flight Season') }}</label>
 
                     <select class="form-select form-control-rounded small" id="season" name="season">
@@ -62,6 +62,23 @@
                     <label for="toDate" class="text-muted bold">{{ __('To Date') }}</label>
 
                     <input class="form-control" type="date" id="toDate" name="toDate" value="{{ request('toDate') }}">
+                </div>
+            @endif
+
+            @if (in_array('day', $filters))
+                <div class="col-md-2">
+                    <label for="day" class="text-md-right">{{ __('Flight Day') }}</label>
+
+                    <select class="form-select form-control-rounded small" id="day" name="day">
+                        <option value="" selected>{{ __('Select Flight Day') }}</option>
+                        <option value="Monday" {{ 'Monday' === request('day') ? ' selected' : '' }}>{{ __('Monday') }}</option>
+                        <option value="Tuesday" {{ 'Tuesday' === request('day') ? ' selected' : '' }}>{{ __('Tuesday') }}</option>
+                        <option value="Wednesday" {{ 'Wednesday' === request('day') ? ' selected' : '' }}>{{ __('Wednesday') }}</option>
+                        <option value="Thursday" {{ 'Thursday' === request('day') ? ' selected' : '' }}>{{ __('Thursday') }}</option>
+                        <option value="Friday" {{ 'Friday' === request('day') ? ' selected' : '' }}>{{ __('Friday') }}</option>
+                        <option value="Saturday" {{ 'Saturday' === request('day') ? ' selected' : '' }}>{{ __('Saturday') }}</option>
+                        <option value="Sunday" {{ 'Sunday' === request('day') ? ' selected' : '' }}>{{ __('Sunday') }}</option>
+                    </select>
                 </div>
             @endif
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int id
@@ -62,6 +63,7 @@ class Flight extends Model
             ->when(!empty($data['season']), fn (Builder $query) => $query->whereRelation('season', 'id', $data['season']))
             ->when(!empty($data['category']), fn (Builder $query) => $query->where('flight_category', $data['category']))
             ->when(!empty($data['fromDate']), fn (Builder $query) => $query->whereDate('flight_date', '>=', $data['fromDate']))
+            ->when(!empty($data['day']), fn (Builder $query) => $query->select('*', DB::raw("DAYNAME(flight_date) AS dayName"))->having('dayName', $data['day']))
             ->when(!empty($data['toDate']), fn (Builder $query) => $query->whereDate('flight_date', '<=', $data['toDate']));
     }
 }

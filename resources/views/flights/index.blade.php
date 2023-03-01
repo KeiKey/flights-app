@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mb-2">
-                    @include('partials.filters', ['filters' => ['company', 'season', 'category', 'fromDate', 'toDate']])
+                    @include('partials.filters', ['filters' => ['company', 'season', 'category', 'fromDate', 'toDate', 'day']])
                 </div>
             </div>
         </div>
