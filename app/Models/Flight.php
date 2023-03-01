@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string destination
  * @property string destination_description
  * @property string call_sign
+ * @property bool   arrival
  * @property string comment
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -37,6 +38,7 @@ class Flight extends Model
         'destination',
         'destination_description',
         'call_sign',
+        'arrival',
         'comment'
     ];
 

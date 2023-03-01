@@ -5,6 +5,7 @@ namespace App\Factories\Flight;
 use App\Models\Company;
 use App\Models\Flight;
 use App\Models\Season;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class ScheduledFlight extends BaseFlight
@@ -15,7 +16,7 @@ class ScheduledFlight extends BaseFlight
         $season = Season::query()->findOrFail($data['flightSeason']);
         $daysToHaveFlights = array_filter($data['timetables'], fn($day) => !empty($day));
 
-        foreach (CarbonPeriod::create($season->start_date, $season->end_date) as $date) {
+        foreach (CarbonPeriod::create(Carbon::parse($data['start_date']), Carbon::parse($data['end_date'])) as $date) {
             if (!array_key_exists($date->dayName, $daysToHaveFlights)){
                 continue;
             }

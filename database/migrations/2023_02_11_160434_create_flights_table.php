@@ -24,6 +24,7 @@ class CreateFlightsTable extends Migration
             $table->string('destination_description');
             $table->string('call_sign');
             $table->longText('comment');
+            $table->boolean('arrival')->default(false);
             $table->softDeletes();
             $table->timestamps();
 

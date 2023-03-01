@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Season;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        return view('companies.create');
+        return view('companies.create', ['seasons' => Season::all()]);
     }
 
     /**
@@ -39,7 +40,10 @@ class CompanyController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            Company::query()->create(['name' => $request->input('name')]);
+            Company::query()->create([
+                'name' => $request->input('name'),
+                'season_id' => $request->input('season_id')
+            ]);
 
             return redirect()->route('companies.index');
         } catch (Exception $exception) {
@@ -55,7 +59,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company): View
     {
-        return view('companies.edit', ['company' => $company]);
+        return view('companies.edit', ['company' => $company, 'seasons' => Season::all()]);
     }
 
     /**
@@ -69,7 +73,8 @@ class CompanyController extends Controller
     {
         try {
             $company->update([
-                'name' => $request->input('name')
+                'name' => $request->input('name'),
+                'season_id' => $request->input('season_id')
             ]);
 
             return redirect()->route('companies.index');

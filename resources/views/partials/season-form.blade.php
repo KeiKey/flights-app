@@ -5,20 +5,12 @@
     @endisset
 
     <div class="row mb-3">
-        <label for="company" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
+        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Season name') }}</label>
 
         <div class="col-md-6">
-            <select class="form-select form-control-rounded js-multiple" id="company" name="companies[]" required multiple>
-                <option value="" disabled>Select company</option>
+            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', isset($season) ? $season->name : '') }}" required autocomplete="name" autofocus>
 
-                @foreach($companies as $company)
-                    <option value="{{ $company->id }}"
-                        {{ in_array($company->id, old('companies', isset($season) ? $season->companies->pluck('id')->toArray() : [] )) ? ' selected' : '' }}
-                    >{{ $company->name }}</option>
-                @endforeach
-            </select>
-
-            @error('company')
+            @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

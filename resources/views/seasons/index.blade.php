@@ -16,7 +16,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Companies</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Start date</th>
                                 <th scope="col">End date</th>
                                 <th scope="col">Actions</th>
@@ -26,11 +26,7 @@
                             @foreach($seasons as $season)
                                 <tr>
                                     <th scope="row">{{ $season->id }}</th>
-                                    <td>
-                                        @foreach($season->companies as $company)
-                                            <span class="badge bg-primary">{{ $company->name }}</span>
-                                        @endforeach
-                                    </td>
+                                    <td>{{ $season->name }}</td>
                                     <td>{{ $season->start_date->format('d-m-Y') }}</td>
                                     <td>{{ $season->end_date->format('d-m-Y') }}</td>
                                     <td class="d-flex justify-content-start">

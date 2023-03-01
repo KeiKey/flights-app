@@ -73,6 +73,24 @@
     </div>
 
     <div class="row mb-3">
+        <label for="arrival" class="col-md-4 col-form-label text-md-right">{{ __('Arrival') }}</label>
+
+        <div class="col-md-6">
+            <select class="form-select form-control-rounded" id="arrival" name="arrival" required>
+                <option value="" disabled selected>Select arrival or departure</option>
+                <option value="0">Arrives</option>
+                <option value="1">Departures</option>
+            </select>
+
+            @error('arrival')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+    <div class="row mb-3">
         <label for="call_sign" class="col-md-4 col-form-label text-md-right">{{ __('Call Sign') }}</label>
 
         <div class="col-md-6">
@@ -121,33 +139,33 @@
         </div>
     </div>
 
-{{--    <div class="row mb-3">--}}
-{{--        <label for="start_date" class="col-md-4 col-form-label text-md-right">{{ __('Start date') }}</label>--}}
+    <div class="row mb-3">
+        <label for="start_date" class="col-md-4 col-form-label text-md-right">{{ __('Start date') }}</label>
 
-{{--        <div class="col-md-6">--}}
-{{--            <input class="form-control" type="date" id="start_date" name="start_date" value="{{ old('start_date') }}" required>--}}
+        <div class="col-md-6">
+            <input class="form-control" type="date" id="start_date" name="start_date" value="{{ old('start_date') }}" required>
 
-{{--            @error('start_date')--}}
-{{--            <span class="invalid-feedback" role="alert">--}}
-{{--                <strong>{{ $message }}</strong>--}}
-{{--            </span>--}}
-{{--            @enderror--}}
-{{--        </div>--}}
-{{--    </div>--}}
+            @error('start_date')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
 
-{{--    <div class="row mb-3">--}}
-{{--        <label for="end_date" class="col-md-4 col-form-label text-md-right">{{ __('End date') }}</label>--}}
+    <div class="row mb-3">
+        <label for="end_date" class="col-md-4 col-form-label text-md-right">{{ __('End date') }}</label>
 
-{{--        <div class="col-md-6">--}}
-{{--            <input class="form-control" type="date" id="end_date" name="end_date" value="{{ old('end_date') }}" required>--}}
+        <div class="col-md-6">
+            <input class="form-control" type="date" id="end_date" name="end_date" value="{{ old('end_date') }}" required>
 
-{{--            @error('end_date')--}}
-{{--            <span class="invalid-feedback" role="alert">--}}
-{{--                <strong>{{ $message }}</strong>--}}
-{{--            </span>--}}
-{{--            @enderror--}}
-{{--        </div>--}}
-{{--    </div>--}}
+            @error('end_date')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
 
     <div class="row mb-3">
         <label for="comment" class="col-md-4 col-form-label text-md-right">{{ __('Comment') }}</label>
