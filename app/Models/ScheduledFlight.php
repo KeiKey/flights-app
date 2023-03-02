@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
  * @property int id
  * @property string season_id
  * @property string company_id
- * @property string flight_category
  * @property Carbon flight_date
  * @property string flight_hour
  * @property string destination
@@ -26,14 +25,13 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon updated_at
  * @property Carbon deleted_at
  */
-class Flight extends Model
+class ScheduledFlight extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'season_id',
         'company_id',
-        'flight_category',
         'flight_date',
         'flight_hour',
         'destination',

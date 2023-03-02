@@ -20,6 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 {{--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
 {{--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+    @livewireStyles
 </head>
 <body>
     <div id="app">
@@ -37,16 +38,16 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                                <a @class(['nav-link', 'active' => request()->routeIs('users.*')]) href="{{ route('users.index') }}">{{ __('general.users') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('companies.index') }}">{{ __('Companies') }}</a>
+                                <a @class(['nav-link', 'active' => request()->routeIs('companies.*')]) href="{{ route('companies.index') }}">{{ __('general.companies') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('seasons.index') }}">{{ __('Seasons') }}</a>
+                                <a @class(['nav-link', 'active' => request()->routeIs('seasons.*')]) href="{{ route('seasons.index') }}">{{ __('general.seasons') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('flights.index') }}">{{ __('Flights') }}</a>
+                                <a @class(['nav-link', 'active' => request()->routeIs('scheduled-flights.*')]) href="{{ route('scheduled-flights.index') }}">{{ __('general.scheduled_flight') }}</a>
                             </li>
                         @endauth
                     </ul>
@@ -110,5 +111,6 @@
             $('.js-multiple').select2();
         });
     </script>
+    @livewireScripts
 </body>
 </html>

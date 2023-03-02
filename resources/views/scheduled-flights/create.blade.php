@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Create a new flight') }}</div>
+                    <div class="card-header">{{ __('general.create_scheduled_flight') }}</div>
 
                     <div class="card-body">
-                        @include('partials.store-flight-form')
+                        <livewire:create-scheduled-flights />
                     </div>
                 </div>
             </div>

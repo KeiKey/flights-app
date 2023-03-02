@@ -8,7 +8,7 @@
 
     <ul class="dropdown-menu">
         @if ($notifications->isEmpty())
-            {{ __('There are no incoming flights!') }}
+            {{ __('There are no incoming scheduled-flights!') }}
         @else
             @foreach($notifications as $notification)
                 <li>

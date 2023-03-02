@@ -1,19 +1,25 @@
 <?php
 
-namespace App\Factories\Flight;
+namespace App\Services;
 
 use App\Models\Company;
-use App\Models\Flight;
+use App\Models\ScheduledFlight;
 use App\Models\Season;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Exception;
 
-class ScheduledFlight extends BaseFlight
+class ScheduledFlightService
 {
+    /**
+     * Create a new flight
+     *
+     * @throws Exception
+     */
     public function createFlight(array $data)
     {
         /** @var Season $season */
-        $season = Season::query()->findOrFail($data['flightSeason']);
+        $season = Season::query()->find($data['flightSeason']);
         $daysToHaveFlights = array_filter($data['timetables'], fn($day) => !empty($day));
 
         foreach (CarbonPeriod::create(Carbon::parse($data['start_date']), Carbon::parse($data['end_date'])) as $date) {
@@ -23,22 +29,30 @@ class ScheduledFlight extends BaseFlight
 
             $season->companies
                 ->each(function (Company $company) use ($season, $date, $daysToHaveFlights, $data) {
-                    Flight::query()->create([
+                    ScheduledFlight::query()->create([
                         'season_id'               => $season->id,
                         'company_id'              => $company->id,
-                        'flight_category'         => $data['flightCategory'],
                         'flight_date'             => $date,
                         'flight_hour'             => $daysToHaveFlights[$date->dayName],
                         'destination'             => $data['destination'],
                         'destination_description' => $data['destination_description'],
                         'call_sign'               => $data['call_sign'],
+                        'arrival'                 => $data['arrival'],
                         'comment'                 => $data['comment']
                     ]);
                 });
         }
     }
 
-    public function updateFlight(Flight $flight, array $data): Flight
+    /**
+     * Update an existing ScheduledFlight.
+     *
+     * @param ScheduledFlight $flight
+     * @param array $data
+     * @return ScheduledFlight
+     * @throws Exception
+     */
+    public function updateFlight(ScheduledFlight $flight, array $data): ScheduledFlight
     {
         $flight->update([
             'flight_date'             => $data['flight_date'],
@@ -46,8 +60,23 @@ class ScheduledFlight extends BaseFlight
             'destination'             => $data['destination'],
             'destination_description' => $data['destination_description'],
             'call_sign'               => $data['call_sign'],
-            'comment'                 => $data['comment']
+            'arrival'                 => $data['arrival'],
+            'comment'                 => $data['comment'],
         ]);
+
+        return $flight;
+    }
+
+    /**
+     * Delete an existing ScheduledFlight.
+     *
+     * @param ScheduledFlight $flight
+     * @return ScheduledFlight
+     * @throws Exception
+     */
+    public function deleteFlight(ScheduledFlight $flight): ScheduledFlight
+    {
+        $flight->delete();
 
         return $flight;
     }

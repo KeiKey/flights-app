@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFlightsTable extends Migration
+class CreateScheduledFlightsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('flights', function (Blueprint $table) {
+        Schema::create('scheduled_flights', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('season_id');
             $table->unsignedBigInteger('company_id');
-            $table->string('flight_category');
             $table->date('flight_date');
             $table->time('flight_hour');
             $table->string('destination');
@@ -30,7 +29,6 @@ class CreateFlightsTable extends Migration
 
             $table->foreign('season_id')->references('id')->on('seasons')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-
         });
     }
 
@@ -39,13 +37,13 @@ class CreateFlightsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('flights', function (Blueprint $table) {
+        Schema::table('scheduled_flights', function (Blueprint $table) {
             $table->dropForeign(['season_id']);
             $table->dropForeign(['company_id']);
         });
 
-        Schema::dropIfExists('flights');
+        Schema::dropIfExists('scheduled_flights');
     }
 }

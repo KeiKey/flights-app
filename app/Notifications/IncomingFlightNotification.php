@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Flight;
+use App\Models\ScheduledFlight;
 use Illuminate\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 
@@ -15,7 +15,7 @@ class IncomingFlightNotification extends Notification
      *
      * @return void
      */
-    public function __construct(private Flight $flight)
+    public function __construct(private ScheduledFlight $flight)
     {}
 
     /**
@@ -41,7 +41,7 @@ class IncomingFlightNotification extends Notification
             'flight_id' => $this->flight->id,
             'title'     => __('There is an incoming flight'),
             'subtitle'  => $this->flight->flight_date->rawFormat('D, M j, Y').', '.$this->flight->flight_hour,
-            'url'       => route('flights.show', $this->flight)
+            'url'       => route('scheduled-flights.show', $this->flight)
         ];
     }
 }

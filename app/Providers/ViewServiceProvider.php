@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Enums\FlightCategory;
 use App\Models\Company;
-use App\Models\Flight;
+use App\Models\ScheduledFlight;
 use App\Models\Season;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\ServiceProvider;
@@ -31,7 +30,6 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer('partials.filters', function ($view) {
             $view->with([
-                'flightCategories' => FlightCategory::toArray(),
                 'companies'        => Company::query()->pluck('name', 'id'),
                 'seasons'          => Season::query()->get()
             ]);
@@ -39,8 +37,8 @@ class ViewServiceProvider extends ServiceProvider
 
         View::composer('partials.notifications', function ($view) {
             $view->with(['notifications' => auth()->user()->unreadNotifications->filter(function(DatabaseNotification $notification) {
-                /** @var Flight $flight */
-                $flight = Flight::query()->find($notification->data['flight_id']);
+                /** @var ScheduledFlight $flight */
+                $flight = ScheduledFlight::query()->find($notification->data['flight_id']);
                     $notification->append(['testttt' => 'ddd']);
 
                     $notification->getAttribute('testttt');

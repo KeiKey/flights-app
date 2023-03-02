@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\FlightController;
+use App\Http\Controllers\ScheduledFlightController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +25,20 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->only(['index', 'update', 'destroy']);
     Route::resource('companies', CompanyController::class);
     Route::resource('seasons', SeasonController::class);
-    Route::resource('flights', FlightController::class);
+    Route::resource('scheduled-flights', ScheduledFlightController::class);
 });
+
+// + companies - should be added the season - careful the same name should not be able to be added for the same season?
+// + season - should not have the company
+// + add the field season name
+// + scheduled - start and end date / vjen iken?
+// + add the field to the filters to check by day
+
+//transform hours to 24h
+
+//Scheduled - charter scheduled-flights - military overflight - notams
+
+//charter scheduled-flights - military overflight have the same fields -
+
+//notmas - has notifications - new notam pop up - we should get the types list and the statuess list - also the checks for the required fields
+//add the print to the scheduled scheduled-flights

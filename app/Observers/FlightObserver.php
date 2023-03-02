@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Flight;
+use App\Models\ScheduledFlight;
 use App\Models\User;
 use App\Notifications\IncomingFlightNotification;
 use Illuminate\Notifications\DatabaseNotification;
@@ -11,45 +11,45 @@ use Illuminate\Support\Facades\Notification;
 class FlightObserver
 {
     /**
-     * Handle the Flight "created" event.
+     * Handle the ScheduledFlight "created" event.
      *
-     * @param Flight $flight
+     * @param ScheduledFlight $flight
      * @return void
      */
-    public function created(Flight $flight): void
+    public function created(ScheduledFlight $flight): void
     {
         Notification::send(User::all(), (new IncomingFlightNotification($flight)));
     }
 
     /**
-     * Handle the Flight "deleted" event.
+     * Handle the ScheduledFlight "deleted" event.
      *
-     * @param Flight $flight
+     * @param ScheduledFlight $flight
      * @return void
      */
-    public function deleted(Flight $flight): void
+    public function deleted(ScheduledFlight $flight): void
     {
         DatabaseNotification::query()->whereJsonContains('flight_id', $flight->id)->delete();
     }
 
     /**
-     * Handle the Flight "restored" event.
+     * Handle the ScheduledFlight "restored" event.
      *
-     * @param Flight $flight
+     * @param ScheduledFlight $flight
      * @return void
      */
-    public function restored(Flight $flight): void
+    public function restored(ScheduledFlight $flight): void
     {
         DatabaseNotification::query()->withTrashed()->whereJsonContains('flight_id', $flight->id)->restore();
     }
 
     /**
-     * Handle the Flight "force deleted" event.
+     * Handle the ScheduledFlight "force deleted" event.
      *
-     * @param Flight $flight
+     * @param ScheduledFlight $flight
      * @return void
      */
-    public function forceDeleted(Flight $flight): void
+    public function forceDeleted(ScheduledFlight $flight): void
     {
         DatabaseNotification::query()->whereJsonContains('flight_id', $flight->id)->forceDelete();
     }

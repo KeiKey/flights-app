@@ -13,7 +13,7 @@
 
                 @foreach($seasons as $season)
                     <option value="{{ $season->id }}" {{ $season->id == old('season_id', isset($company) ? $company->season->id : '') ? ' selected' : '' }}>
-                        {{ $season->name }}: {{ $season->start_date?->format('d M Y') }} - {{ $season->end_date?->format('d M Y') }}
+                        {{ $season->name }}: {{ $season->start_date?->format('d/m/Y') }} - {{ $season->end_date?->format('d/m/Y') }}
                     </option>
                 @endforeach
             </select>

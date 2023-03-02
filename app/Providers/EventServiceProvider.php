@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Flight;
+use App\Models\ScheduledFlight;
 use App\Observers\FlightObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -29,6 +29,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Flight::observe(FlightObserver::class);
+        ScheduledFlight::observe(FlightObserver::class);
     }
 }
