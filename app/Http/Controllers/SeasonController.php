@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Models\Season;
 use Exception;
@@ -100,5 +102,18 @@ class SeasonController extends Controller
         $season->delete();
 
         return redirect()->back();
+    }
+
+    /**
+     * Download flights.
+     *
+     * @return Response
+     */
+    public function download(): Response
+    {
+        $pdf = PDF::loadView('pdf.season-table', ['seasons' => Season::all()])
+            ->setPaper('a4', 'landscape');;
+
+        return $pdf->download('seasons.pdf');
     }
 }

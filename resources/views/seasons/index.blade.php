@@ -6,9 +6,12 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        {{ __('Seasons') }}
+                        {{ __('general.seasons') }}
 
-                        <a href="{{ route('seasons.create') }}" class="btn btn-sm btn-primary">Create a new seasons</a>
+                        <div>
+                            <a href="{{ route('seasons.create') }}" class="btn btn-sm btn-primary">{{ __('general.create_season') }}</a>
+                            <a href="{{ route('seasons.download') }}" class="btn btn-sm btn-primary">{{ __('general.print') }}</a>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -16,10 +19,10 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Start date</th>
-                                <th scope="col">End date</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">{{ __('general.name') }}</th>
+                                <th scope="col">{{ __('general.start_date_short') }}</th>
+                                <th scope="col">{{ __('general.end_date_short') }}</th>
+                                <th scope="col">{{ __('general.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -31,13 +34,13 @@
                                     <td>{{ $season->end_date->format('d-m-Y') }}</td>
                                     <td class="d-flex justify-content-start">
                                         <a href="{{ route('seasons.edit', $season) }}"
-                                           class="btn btn-success btn-sm" type="submit">Update</a>
+                                           class="btn btn-success btn-sm" type="submit">{{ __('general.update') }}</a>
 
                                         <form action="{{ route('seasons.destroy', $season) }}" method="POST">
                                             @csrf
                                             @method('Delete')
 
-                                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                            <button class="btn btn-danger btn-sm" type="submit">{{ __('general.delete') }}</button>
                                         </form>
                                     </td>
                                 </tr>

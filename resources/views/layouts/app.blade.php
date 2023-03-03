@@ -47,7 +47,16 @@
                                 <a @class(['nav-link', 'active' => request()->routeIs('seasons.*')]) href="{{ route('seasons.index') }}">{{ __('general.seasons') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a @class(['nav-link', 'active' => request()->routeIs('scheduled-flights.*')]) href="{{ route('scheduled-flights.index') }}">{{ __('general.scheduled_flight') }}</a>
+                                <a @class(['nav-link', 'active' => request()->routeIs('scheduled-flights.*')]) href="{{ route('scheduled-flights.index') }}">{{ __('general.scheduled') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a @class(['nav-link', 'active' => request()->routeIs('charters.*')]) href="{{ route('charters.index') }}">{{ __('general.charter') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a @class(['nav-link', 'active' => request()->routeIs('militaries.*')]) href="{{ route('militaries.index') }}">{{ __('general.military_overflight') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a @class(['nav-link', 'active' => request()->routeIs('notams.*')]) href="{{ route('notams.index') }}">{{ __('general.notam') }}</a>
                             </li>
                         @endauth
                     </ul>

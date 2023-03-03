@@ -6,7 +6,7 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        {{ __('Edit a company') }}
+                        {{ __('general.edit_company') }}
                         <span>
                             {{ $company->name }}
                         </span>

@@ -8,7 +8,7 @@ use App\Notifications\IncomingFlightNotification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Notification;
 
-class FlightObserver
+class NotamObserver
 {
     /**
      * Handle the ScheduledFlight "created" event.

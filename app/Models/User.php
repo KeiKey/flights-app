@@ -20,8 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon updated_at
  * @property Carbon deleted_at
  */
-class User extends Authenticatable
-//    implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 

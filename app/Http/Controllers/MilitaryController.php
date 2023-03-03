@@ -6,13 +6,11 @@ use App\Models\Season;
 use App\Services\ScheduledFlightService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Models\ScheduledFlight;
 use Exception;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-class ScheduledFlightController extends Controller
+class MilitaryController extends Controller
 {
     public function __construct(private ScheduledFlightService $scheduledFlightService)
     {}
@@ -117,22 +115,5 @@ class ScheduledFlightController extends Controller
         } catch (Exception $exception) {
             return redirect()->back();
         }
-    }
-
-    /**
-     * Download flights.
-     *
-     * @return Response
-     */
-    public function download(): Response
-    {
-        $pdf = PDF::loadView('pdf.scheduled-table', [
-            'scheduledFlights' => ScheduledFlight::query()
-                ->orderBy('id', 'DESC')
-                ->filter(request()->all())
-                ->get()
-        ])->setPaper('a4', 'landscape');;
-
-        return $pdf->download('schedule-flights.pdf');
     }
 }

@@ -16,7 +16,10 @@
                     <div class="card-header d-flex justify-content-between">
                         {{ __('general.scheduled_flight') }}
 
-                        <a href="{{ route('scheduled-flights.create') }}" class="btn btn-sm btn-primary">{{ __('general.create_scheduled_flight') }}</a>
+                        <div>
+                            <a href="{{ route('scheduled-flights.create') }}" class="btn btn-sm btn-primary">{{ __('general.create_scheduled_flight') }}</a>
+                            <a href="{{ route('scheduled-flights.download', request()->query()) }}" class="btn btn-sm btn-primary">{{ __('general.print') }}</a>
+                        </div>
                     </div>
 
                     <div class="card-body">

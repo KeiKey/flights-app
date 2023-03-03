@@ -5,11 +5,11 @@
     @endisset
 
     <div class="row mb-3">
-        <label for="season" class="col-md-4 col-form-label text-md-right">{{ __('Season') }}</label>
+        <label for="season" class="col-md-4 col-form-label text-md-right">{{ __('general.season') }}</label>
 
         <div class="col-md-6">
             <select class="form-select form-control-rounded" id="season" name="season_id">
-                <option value="" disabled selected>Select Season</option>
+                <option value="" disabled selected>{{ __('general.choose_season') }}</option>
 
                 @foreach($seasons as $season)
                     <option value="{{ $season->id }}" {{ $season->id == old('season_id', isset($company) ? $company->season->id : '') ? ' selected' : '' }}>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="row mb-3">
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Company name') }}</label>
+        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('general.company_name') }}</label>
 
         <div class="col-md-6">
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', isset($company) ? $company->name : '') }}" required autocomplete="name" autofocus>
@@ -43,7 +43,7 @@
     <div class="row mb-0">
         <div class="col-md-8 offset-md-4">
             <button type="submit" class="btn btn-primary">
-                @if(isset($company)) {{ __('Update') }} @else {{ __('Create') }} @endif
+                @if(isset($company)) {{ __('general.update') }} @else {{ __('general.create') }} @endif
             </button>
         </div>
     </div>

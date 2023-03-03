@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
@@ -34,7 +36,7 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
@@ -94,5 +96,18 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect()->back();
+    }
+
+    /**
+     * Download flights.
+     *
+     * @return Response
+     */
+    public function download(): Response
+    {
+        $pdf = PDF::loadView('pdf.company-table', ['companies' => Company::all()])
+            ->setPaper('a4', 'landscape');;
+
+        return $pdf->download('companies.pdf');
     }
 }

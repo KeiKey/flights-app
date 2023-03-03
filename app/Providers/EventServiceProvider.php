@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\ScheduledFlight;
-use App\Observers\FlightObserver;
+use App\Models\Notam;
+use App\Observers\NotamObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
+//            SendEmailVerificationNotification::class,
         ],
     ];
 
@@ -27,8 +26,8 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        ScheduledFlight::observe(FlightObserver::class);
+        Notam::observe(NotamObserver::class);
     }
 }
