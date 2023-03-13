@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage_user');
+    }
+
     /**
      * Display a listing of the resource.
      *

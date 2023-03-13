@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('scheduled-flights/download', [ScheduledFlightController::class, 'download'])->name('scheduled-flights.download');
     Route::resource('scheduled-flights', ScheduledFlightController::class);
 
+    Route::get('charters/download', [CharterController::class, 'download'])->name('charters.download');
     Route::resource('charters', CharterController::class);
 
     Route::resource('militaries', MilitaryController::class);
@@ -49,10 +50,10 @@ Route::middleware(['auth'])->group(function () {
 // + scheduled - start and end date / vjen iken?
 // + add the field to the filters to check by day
 // + add the print to the scheduled scheduled-flights
+// + Scheduled - charter scheduled-flights - military overflight - notams
+
 
 // ? transform hours to 24h
-
-//Scheduled - charter scheduled-flights - military overflight - notams
 
 //charter scheduled-flights - military overflight have the same fields -
 

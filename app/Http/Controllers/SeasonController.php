@@ -13,6 +13,11 @@ use Exception;
 
 class SeasonController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage_season');
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -13,6 +13,11 @@ use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage_company');
+    }
+
     /**
      * Display a listing of the resource.
      *

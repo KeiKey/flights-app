@@ -15,7 +15,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class ScheduledFlightController extends Controller
 {
     public function __construct(private ScheduledFlightService $scheduledFlightService)
-    {}
+    {
+        $this->middleware('can:manage_flight');
+    }
 
     /**
      * Display a listing of the resource.
