@@ -15,6 +15,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+            ['name' => 'manage_log',     'guard_name' => 'web'],
             ['name' => 'manage_user',    'guard_name' => 'web'],
             ['name' => 'manage_flight',  'guard_name' => 'web'],
             ['name' => 'manage_company', 'guard_name' => 'web'],

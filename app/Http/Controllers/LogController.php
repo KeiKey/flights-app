@@ -9,6 +9,11 @@ use Spatie\Activitylog\Models\Activity;
 
 class LogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage_log');
+    }
+
     /**
      * Show administation log page.
      *
