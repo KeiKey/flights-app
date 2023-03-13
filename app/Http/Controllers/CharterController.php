@@ -131,13 +131,13 @@ class CharterController extends Controller
      */
     public function download(): Response
     {
-        $pdf = PDF::loadView('pdf.scheduled-table', [
+        $pdf = PDF::loadView('pdf.charter-table', [
             'charters' => Charter::query()
                 ->orderBy('id', 'DESC')
                 ->filter(request()->all())
                 ->get()
         ])->setPaper('a4', 'landscape');;
 
-        return $pdf->download('schedule-flights.pdf');
+        return $pdf->download('charter-flights.pdf');
     }
 }

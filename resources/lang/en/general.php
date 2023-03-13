@@ -71,5 +71,6 @@ return [
     'clearance_no' => 'Clearance no',
     'choose_type_of_flight' => 'Choose type of flight',
     'edit_charter_flight' => 'Update Fluturim Charter',
+    'clr' => 'CLR',
 
 ];
