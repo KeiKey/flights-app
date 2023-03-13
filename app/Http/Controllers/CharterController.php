@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\CharterType;
 use App\Models\Charter;
-use App\Models\Season;
 use App\Services\CharterService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;

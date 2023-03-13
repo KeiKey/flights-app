@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @property int id
@@ -29,7 +32,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Charter extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'flight_date',
@@ -55,5 +58,18 @@ class Charter extends Model
         return $builder->when(!empty($data['fromDate']), fn (Builder $query) => $query->whereDate('flight_date', '>=', $data['fromDate']))
             ->when(!empty($data['day']), fn (Builder $query) => $query->select('*', DB::raw("DAYNAME(flight_date) AS dayName"))->having('dayName', $data['day']))
             ->when(!empty($data['toDate']), fn (Builder $query) => $query->whereDate('flight_date', '<=', $data['toDate']));
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => Lang::get('general.log', [
+                'model' => __('general.charter'),
+                'id' => $this->id,
+                'eventName' => $eventName
+            ]));
     }
 }

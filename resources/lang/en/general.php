@@ -72,5 +72,13 @@ return [
     'choose_type_of_flight' => 'Choose type of flight',
     'edit_charter_flight' => 'Update Fluturim Charter',
     'clr' => 'CLR',
+    'charters' => 'Charters',
+    'created_at' => 'Created at',
+    'user' => 'User',
+    'function' => 'Function',
+    'search' => 'Search',
+    'log' => ':model with id :id has been :eventName',
+    'technical_data' => 'Technical data',
+    'logs' => 'Logs',
 
 ];

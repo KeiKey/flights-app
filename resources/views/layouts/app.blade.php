@@ -38,6 +38,9 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
+                                <a @class(['nav-link', 'active' => request()->routeIs('logs.*')]) href="{{ route('logs.index') }}">{{ __('general.logs') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a @class(['nav-link', 'active' => request()->routeIs('users.*')]) href="{{ route('users.index') }}">{{ __('general.users') }}</a>
                             </li>
                             <li class="nav-item">

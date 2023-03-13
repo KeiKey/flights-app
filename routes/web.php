@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CharterController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\MilitaryController;
 use App\Http\Controllers\NotamController;
 use App\Http\Controllers\ScheduledFlightController;
@@ -25,6 +26,8 @@ Auth::routes(['verify' => true]);
 Route::get('/', function () {return redirect()->route('login');});
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('logs', [LogController::class, 'logs'])->name('logs.index');
+
     Route::resource('users', UserController::class)->only(['index', 'update', 'destroy']);
 
     Route::get('companies/download', [CompanyController::class, 'download'])->name('companies.download');
@@ -43,18 +46,3 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('notams', NotamController::class);
 });
-
-// + companies - should be added the season - careful the same name should not be able to be added for the same season?
-// + season - should not have the company
-// + add the field season name
-// + scheduled - start and end date / vjen iken?
-// + add the field to the filters to check by day
-// + add the print to the scheduled scheduled-flights
-// + Scheduled - charter scheduled-flights - military overflight - notams
-
-
-// ? transform hours to 24h
-
-//charter scheduled-flights - military overflight have the same fields -
-
-//notmas - has notifications - new notam pop up - we should get the types list and the statuess list - also the checks for the required fields

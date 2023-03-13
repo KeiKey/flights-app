@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Season;
-use App\Services\ScheduledFlightService;
+use App\Enums\CharterType;
+use App\Models\Charter;
+use App\Services\CharterService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
-use App\Models\ScheduledFlight;
 use Exception;
 
 class MilitaryController extends Controller
 {
-    public function __construct(private ScheduledFlightService $scheduledFlightService)
+    public function __construct(private CharterService $charterService)
     {
         $this->middleware('can:manage_flight');
     }
@@ -24,8 +26,8 @@ class MilitaryController extends Controller
      */
     public function index(): View
     {
-        return view('scheduled-flights.index', [
-            'scheduledFlights' => ScheduledFlight::query()
+        return view('charters.index', [
+            'charters' => Charter::query()
                 ->orderBy('id', 'DESC')
                 ->filter(request()->all())
                 ->paginate(20)
@@ -35,12 +37,12 @@ class MilitaryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param ScheduledFlight $scheduledFlight
+     * @param Charter $charter
      * @return View
      */
-    public function show(ScheduledFlight $scheduledFlight): View
+    public function show(Charter $charter): View
     {
-        return view('scheduled-flights.show', ['flight' => $scheduledFlight->load(['season', 'company'])]);
+        return view('charters.show', ['flight' => $charter]);
     }
 
     /**
@@ -50,7 +52,9 @@ class MilitaryController extends Controller
      */
     public function create(): View
     {
-        return view('scheduled-flights.create');
+        return view('charters.create', [
+            'charterTypes' => CharterType::toArray()
+        ]);
     }
 
     /**
@@ -62,9 +66,9 @@ class MilitaryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $this->scheduledFlightService->createFlight($request->all());
+            $this->charterService->createFlight($request->all());
 
-            return redirect()->route('scheduled-flights.index');
+            return redirect()->route('charters.index');
         } catch (Exception $exception) {
             return redirect()->back();
         }
@@ -73,14 +77,14 @@ class MilitaryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ScheduledFlight $scheduledFlight
+     * @param Charter $charter
      * @return View
      */
-    public function edit(ScheduledFlight $scheduledFlight): View
+    public function edit(Charter $charter): View
     {
-        return view('scheduled-flights.edit', [
-            'scheduledFlight' => $scheduledFlight,
-            'seasons'         => Season::query()->with('companies')->get()
+        return view('charters.edit', [
+            'flight'       => $charter,
+            'charterTypes' => CharterType::toArray()
         ]);
     }
 
@@ -88,15 +92,15 @@ class MilitaryController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param ScheduledFlight $scheduledFlight
+     * @param Charter $charter
      * @return RedirectResponse
      */
-    public function update(Request $request, ScheduledFlight $scheduledFlight): RedirectResponse
+    public function update(Request $request, Charter $charter): RedirectResponse
     {
         try {
-            $this->scheduledFlightService->updateFlight($scheduledFlight, $request->all());
+            $this->charterService->updateFlight($charter, $request->all());
 
-            return redirect()->route('scheduled-flights.index');
+            return redirect()->route('charters.index');
         } catch (Exception $exception) {
             return redirect()->back();
         }
@@ -105,17 +109,34 @@ class MilitaryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param ScheduledFlight $scheduledFlight
+     * @param Charter $charter
      * @return RedirectResponse
      */
-    public function destroy(ScheduledFlight $scheduledFlight): RedirectResponse
+    public function destroy(Charter $charter): RedirectResponse
     {
         try {
-            $this->scheduledFlightService->deleteFlight($scheduledFlight);
+            $this->charterService->deleteFlight($charter);
 
             return redirect()->back();
         } catch (Exception $exception) {
             return redirect()->back();
         }
+    }
+
+    /**
+     * Download flights.
+     *
+     * @return Response
+     */
+    public function download(): Response
+    {
+        $pdf = PDF::loadView('pdf.charter-table', [
+            'charters' => Charter::query()
+                ->orderBy('id', 'DESC')
+                ->filter(request()->all())
+                ->get()
+        ])->setPaper('a4', 'landscape');;
+
+        return $pdf->download('charter-flights.pdf');
     }
 }
